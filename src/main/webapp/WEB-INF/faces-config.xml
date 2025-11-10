@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<faces-config version="2.3"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+    
+    <application>
+        <system-event-listener>
+            <system-event-listener-class>
+                com.performance.event.ReviewNotificationListener
+            </system-event-listener-class>
+            <system-event-class>
+                com.performance.event.ReviewSubmittedEvent
+            </system-event-class>
+        </system-event-listener>
+        
+        <system-event-listener>
+            <system-event-listener-class>
+                com.performance.event.NotificationListener
+            </system-event-listener-class>
+            <system-event-class>
+                com.performance.event.NotificationEvent
+            </system-event-class>
+        </system-event-listener>
+    </application>
+</faces-config>

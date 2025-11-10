@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Dashboard - Employee Performance Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fc;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+        
+        .action-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .search-section h3 {
+            margin: 0 0 20px 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            align-items: end;
+        }
+        
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-field label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        input[type="text"], 
+        input[type="number"], 
+        select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .salary-range {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .salary-range input {
+            width: 100%;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        button, .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+        
+        .btn-info:hover {
+            background: #138496;
+        }
+        
+        .btn-clear {
+            background: #f8f9fa;
+            color: #495057;
+            border: 2px solid #dee2e6;
+        }
+        
+        .btn-clear:hover {
+            background: #e9ecef;
+        }
+        
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        th {
+            background: #667eea 0%;
+            color: white;
+            padding: 16px;
+            border: #5568d3;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #333;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background: #f8f9ff;
+        }
+        
+        .rating-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .rating-excellent { 
+            background: #d4edda; 
+            color: #155724; 
+        }
+        
+        .rating-good { 
+            background: #d1ecf1; 
+            color: #0c5460; 
+        }
+        
+        .rating-average { 
+            background: #fff3cd; 
+            color: #856404; 
+        }
+        
+        .rating-below-average { 
+            background: #f8d7da; 
+            color: #721c24; 
+        }
+        
+        .rating-poor { 
+            background: #f5c6cb; 
+            color: #721c24; 
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .no-data p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .employee-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        .clear-filter {
+            font-size: 12px;
+            padding: 4px 8px;
+            background: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+            margin-left: 8px;
+        }
+        
+        .clear-filter:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="header">
+        <div class="header-content">
+            <h1>📊 Employee Dashboard</h1>
+            <h:form style="margin: 0;">
+                <h:commandButton value="Logout" 
+                                 action="#{loginBean.logout}" 
+                                 styleClass="btn btn-secondary"/>
+            </h:form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="messages">
+            <h:messages globalOnly="true" styleClass="alert"/>
+        </div>
+        
+        <div class="action-bar">
+            <h:form style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <h:commandButton value="➕ Add Employee" 
+                                 action="#{employeeBean.navigateToAddEmployee}" 
+                                 styleClass="btn btn-success"/>
+                <h:commandButton value="📝 Performance Review" 
+                                 action="#{employeeBean.navigateToPerformanceReview}" 
+                                 styleClass="btn btn-primary"/>
+            </h:form>
+        </div>
+        
+        <div class="search-section">
+            <h3>🔍 Search &amp; Filter Employees</h3>
+            <h:form>
+                <div class="search-form">
+                    <div class="form-field">
+                        <label>Employee Name:</label>
+                        <div style="display: flex; align-items: center;">
+                            <h:selectOneMenu value="#{employeeBean.searchTerm}" 
+                                           style="flex: 1;">
+                                <f:selectItem itemValue="" itemLabel="-- All Employees --" noSelectionOption="true"/>
+                                <f:selectItems value="#{employeeBean.employeeNames}" 
+                                             var="name" 
+                                             itemValue="#{name}" 
+                                             itemLabel="#{name}"/>
+                            </h:selectOneMenu>
+                            <h:commandButton value="✕" 
+                                           action="#{employeeBean.clearNameFilter}" 
+                                           styleClass="clear-filter"
+                                           rendered="#{not empty employeeBean.searchTerm}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Department:</label>
+                        <div style="display: flex; align-items: center;">
+                            <h:selectOneMenu value="#{employeeBean.selectedDepartment}"
+                                           style="flex: 1;">
+                                <f:selectItem itemValue="" itemLabel="-- All Departments --" noSelectionOption="true"/>
+                                <f:selectItems value="#{employeeBean.departments}"/>
+                            </h:selectOneMenu>
+                            <h:commandButton value="✕" 
+                                           action="#{employeeBean.clearDepartmentFilter}" 
+                                           styleClass="clear-filter"
+                                           rendered="#{not empty employeeBean.selectedDepartment}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label>Salary Range:</label>
+                        <div class="salary-range">
+                            <h:inputText value="#{employeeBean.minSalary}" 
+                                       placeholder="Min ($)">
+                                <f:convertNumber type="number" pattern="#0.00"/>
+                            </h:inputText>
+                            <h:inputText value="#{employeeBean.maxSalary}" 
+                                       placeholder="Max ($)">
+                                <f:convertNumber type="number" pattern="#0.00"/>
+                            </h:inputText>
+                        </div>
+                        <h:commandButton value="Clear Range" 
+                                       action="#{employeeBean.clearSalaryFilter}" 
+                                       styleClass="clear-filter"
+                                       style="margin-top: 5px;"
+                                       rendered="#{not empty employeeBean.minSalary or not empty employeeBean.maxSalary}"/>
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <h:commandButton value="🔍 Search" 
+                                       action="#{employeeBean.searchEmployees}" 
+                                       styleClass="btn btn-primary"/>
+                        <h:commandButton value="Clear All" 
+                                       action="#{employeeBean.clearSearch}" 
+                                       styleClass="btn btn-clear"/>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+        
+        <h:form>
+            <h:dataTable value="#{employeeBean.employees}" 
+                         var="emp" 
+                         rendered="#{not empty employeeBean.employees}">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <strong>#{emp.name}</strong>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Email</f:facet>
+                    #{emp.email}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Department</f:facet>
+                    #{emp.department}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Salary</f:facet>
+                    $<h:outputText value="#{emp.salary}">
+                        <f:convertNumber type="number" pattern="#,##0.00"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Latest Review</f:facet>
+                    <h:panelGroup rendered="#{employeeBean.getLatestReview(emp.id) != null}">
+                        <span class="rating-badge rating-#{employeeBean.getLatestReview(emp.id).rating.name().toLowerCase().replace('_', '-')}">
+                            #{employeeBean.getLatestReview(emp.id).rating.displayName}
+                        </span>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{employeeBean.getLatestReview(emp.id) == null}">
+                        <span style="color: #999;">No reviews yet</span>
+                    </h:panelGroup>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <div class="employee-actions">
+                        <h:commandButton value="📋 View Reviews" 
+                                       action="#{employeeBean.viewEmployeeReviews(emp.id)}" 
+                                       styleClass="btn btn-info"/>
+                    </div>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>

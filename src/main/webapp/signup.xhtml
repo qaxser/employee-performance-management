@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Sign Up - Employee Performance Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        input[type="text"], 
+        input[type="password"], 
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        button, .btn-primary, .btn-secondary {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+/* Primary "Create Account" Button */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(102, 126, 234, 0.45);
+            background: linear-gradient(135deg, #5a6de0 0%, #6b40a0 100%);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Secondary "Cancel" Button */
+        .btn-secondary {
+            background: #f2f2f2;
+            color: #444;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-secondary:hover {
+            background: #e6e6e6;
+            color: #222;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .error-banner {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #c33;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .login-link p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="signup-container">
+        <div class="logo-section">
+            <div class="logo-icon">📝</div>
+            <h1>Create Account</h1>
+            <p class="subtitle">Join Employee Performance Management System</p>
+        </div>
+        
+        <h:form>
+            <div class="messages">
+                <h:messages globalOnly="true" styleClass="error-banner"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="fullName">
+                    Full Name <span class="required">*</span>
+                </label>
+                <h:inputText id="fullName" 
+                             value="#{signupBean.user.fullName}" 
+                             required="true"
+                             requiredMessage="Full name is required"
+                             validatorMessage="Name must be between 2 and 100 characters"
+                             placeholder="Enter your full name">
+                    <f:validateLength minimum="2" maximum="100"/>
+                </h:inputText>
+                <h:message for="fullName" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">
+                    Username <span class="required">*</span>
+                </label>
+                <h:inputText id="username" 
+                             value="#{signupBean.user.username}" 
+                             required="true"
+                             requiredMessage="Username is required"
+                             validatorMessage="Username must be between 3 and 50 characters"
+                             placeholder="Choose a username">
+                    <f:validateLength minimum="3" maximum="50"/>
+                </h:inputText>
+                <h:message for="username" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">
+                    Email <span class="required">*</span>
+                </label>
+                <h:inputText id="email" 
+                             value="#{signupBean.user.email}" 
+                             required="true"
+                             requiredMessage="Email is required"
+                             placeholder="your.email@company.com">
+                    <f:validator validatorId="emailValidator"/>
+                </h:inputText>
+                <h:message for="email" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">
+                    Password <span class="required">*</span>
+                </label>
+                <h:inputSecret id="password" 
+                               value="#{signupBean.user.password}" 
+                               required="true"
+                               requiredMessage="Password is required"
+                               validatorMessage="Password must be at least 6 characters"
+                               placeholder="Create a password">
+                    <f:validateLength minimum="6"/>
+                </h:inputSecret>
+                <h:message for="password" styleClass="error-message"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">
+                    Confirm Password <span class="required">*</span>
+                </label>
+                <h:inputSecret id="confirmPassword" 
+                               value="#{signupBean.confirmPassword}" 
+                               required="true"
+                               requiredMessage="Please confirm your password"
+                               placeholder="Re-enter your password"/>
+                <h:message for="confirmPassword" styleClass="error-message"/>
+            </div>
+            
+            <div class="button-group">
+                <h:commandButton value="Create Account" 
+                                 action="#{signupBean.signup}" 
+                                 styleClass="btn-primary"/>
+                <h:commandButton value="Cancel" 
+                                 action="#{signupBean.cancel}" 
+                                 immediate="true"
+                                 styleClass="btn-secondary"/>
+            </div>
+            
+            <div class="login-link">
+                <p>Already have an account?</p>
+                <h:link value="Log in here" outcome="login"/>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
